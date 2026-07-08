@@ -331,6 +331,125 @@ export async function getCatalogCombos(filters: CatalogComboFilters = {}): Promi
   });
 }
 
+export type PromotedSortBy = "discount_desc" | "newest";
+
+export type PromotedItem =
+  | { type: "product"; data: CatalogProduct }
+  | { type: "combo"; data: CatalogCombo };
+
+export type PromotedItemsFilters = {
+  sortBy?: PromotedSortBy;
+};
+
+export async function getActivePromotedItems(filters: PromotedItemsFilters = {}): Promise<PromotedItem[]> {
+  const supabase = await createClient();
+  const { sortBy = "discount_desc" } = filters;
+
+  const { productMap, comboMap } = await getActivePromotionDiscountMaps();
+
+  const items: PromotedItem[] = [];
+
+  if (productMap.size > 0) {
+    const { data, error } = await supabase
+      .from("products")
+      .select(
+        `
+          id,
+          name,
+          slug,
+          description,
+          price,
+          stock,
+          category_id,
+          active,
+          created_at,
+          updated_at,
+          category:categories(id, name, slug, created_at),
+          images:product_images(id, product_id, url, is_primary, sort_order)
+        `,
+      )
+      .eq("active", true)
+      .in("id", Array.from(productMap.keys()));
+
+    if (error) {
+      throw error;
+    }
+
+    for (const product of (data as unknown as Product[]) ?? []) {
+      const promo = productMap.get(product.id);
+      if (!promo) {
+        continue;
+      }
+
+      const originalPrice = Number(product.price);
+      const discountedPrice = calculateDiscountedPrice(originalPrice, promo.discount_type, promo.discount_value);
+
+      items.push({
+        type: "product",
+        data: { ...product, originalPrice, discountedPrice, hasDiscount: discountedPrice < originalPrice },
+      });
+    }
+  }
+
+  if (comboMap.size > 0) {
+    const { data, error } = await supabase
+      .from("combos")
+      .select(
+        `
+          id,
+          name,
+          slug,
+          description,
+          price,
+          image_url,
+          active,
+          created_at,
+          updated_at,
+          items:combo_items(
+            id,
+            combo_id,
+            product_id,
+            quantity,
+            product:products(id, name, slug, price, active)
+          )
+        `,
+      )
+      .eq("active", true)
+      .in("id", Array.from(comboMap.keys()));
+
+    if (error) {
+      throw error;
+    }
+
+    for (const combo of (data as unknown as ComboWithItems[]) ?? []) {
+      const promo = comboMap.get(combo.id);
+      if (!promo) {
+        continue;
+      }
+
+      const originalPrice = Number(combo.price);
+      const discountedPrice = calculateDiscountedPrice(originalPrice, promo.discount_type, promo.discount_value);
+
+      items.push({
+        type: "combo",
+        data: { ...combo, originalPrice, discountedPrice, hasDiscount: discountedPrice < originalPrice },
+      });
+    }
+  }
+
+  if (sortBy === "newest") {
+    items.sort((a, b) => new Date(b.data.created_at).getTime() - new Date(a.data.created_at).getTime());
+  } else {
+    items.sort((a, b) => {
+      const discountA = a.data.originalPrice > 0 ? (a.data.originalPrice - a.data.discountedPrice) / a.data.originalPrice : 0;
+      const discountB = b.data.originalPrice > 0 ? (b.data.originalPrice - b.data.discountedPrice) / b.data.originalPrice : 0;
+      return discountB - discountA;
+    });
+  }
+
+  return items;
+}
+
 export type ProductWithDiscount = Product & {
   originalPrice: number;
   discountedPrice: number;
