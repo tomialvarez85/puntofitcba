@@ -1,6 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ReactNode } from "react";
+import SignOutButton from "@/components/admin/SignOutButton";
+import { signOut } from "@/lib/actions/auth";
 
 const navItems = [
   { label: "Productos", href: "/admin/products" },
@@ -8,7 +10,6 @@ const navItems = [
   { label: "Marcas", href: "/admin/brands" },
   { label: "Combos", href: "/admin/combos" },
   { label: "Promociones", href: "/admin/promotions" },
-  { label: "Cerrar sesión", href: "/admin/login" },
 ];
 
 export function AdminLayout({ children }: { children: ReactNode }) {
@@ -36,6 +37,10 @@ export function AdminLayout({ children }: { children: ReactNode }) {
                 {item.label}
               </Link>
             ))}
+
+            <form action={signOut}>
+              <SignOutButton />
+            </form>
           </nav>
         </aside>
 
