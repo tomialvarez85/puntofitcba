@@ -10,6 +10,7 @@ const navItems = [
   { label: "Marcas", href: "/admin/brands" },
   { label: "Combos", href: "/admin/combos" },
   { label: "Promociones", href: "/admin/promotions" },
+  { label: "Testimonios", href: "/admin/testimonials" },
 ];
 
 export function AdminLayout({ children }: { children: ReactNode }) {

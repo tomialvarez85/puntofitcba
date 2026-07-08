@@ -1,7 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
-import ComboCard from "@/components/public/ComboCard";
-import ProductCard from "@/components/public/ProductCard";
+import FeaturedCombosSection from "@/components/public/FeaturedCombosSection";
+import FeaturedProductsSection from "@/components/public/FeaturedProductsSection";
+import HeroBackground from "@/components/public/HeroBackground";
+import TestimonialsSection from "@/components/public/TestimonialsSection";
 import {
   getActivePromotions,
   getBrandsWithProducts,
@@ -9,46 +11,26 @@ import {
   getFeaturedProducts,
   getHeroImages,
 } from "@/lib/data/public";
+import { getActiveTestimonials } from "@/lib/data/testimonials";
 import type { ActivePromotion } from "@/lib/data/public";
 import type { Brand } from "@/types/database";
 
-const HERO_GRID_SIZE = 12;
+const HERO_IMAGE_COUNT = 12;
 
 export default async function HomePage() {
-  const [combos, brands, promotions, products, heroImages] = await Promise.all([
+  const [combos, brands, promotions, products, testimonials, heroImages] = await Promise.all([
     getFeaturedCombos(6),
     getBrandsWithProducts(),
     getActivePromotions(4),
     getFeaturedProducts(8),
-    getHeroImages(HERO_GRID_SIZE),
+    getActiveTestimonials(8),
+    getHeroImages(HERO_IMAGE_COUNT),
   ]);
-
-  const heroCells =
-    heroImages.length > 0
-      ? Array.from({ length: HERO_GRID_SIZE }, (_, index) => heroImages[index % heroImages.length])
-      : [];
 
   return (
     <div>
       <section className="relative overflow-hidden bg-brand text-white">
-        {heroCells.length > 0 ? (
-          <div className="absolute inset-0 grid grid-cols-2 grid-rows-6 sm:grid-cols-3 sm:grid-rows-4 md:grid-cols-4 md:grid-rows-3 lg:grid-cols-6 lg:grid-rows-2">
-            {heroCells.map((url, index) => (
-              <div key={`${url}-${index}`} className="relative">
-                <Image
-                  src={url}
-                  alt=""
-                  fill
-                  className="object-cover"
-                  priority={index === 0}
-                  sizes="(min-width: 1024px) 16.67vw, (min-width: 640px) 33vw, 50vw"
-                />
-              </div>
-            ))}
-          </div>
-        ) : null}
-
-        <div className="absolute inset-0 bg-black/60" />
+        <HeroBackground images={heroImages} />
 
         <div className="relative z-10 mx-auto max-w-6xl px-4 py-14 text-center sm:px-6 sm:py-20">
           <h1 className="text-4xl font-extrabold tracking-tight text-white sm:text-6xl">PUNTOFITCBA</h1>
@@ -73,25 +55,7 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {combos.length > 0 ? (
-        <section className="mx-auto max-w-6xl px-4 py-12 sm:px-6">
-          <div className="mb-6 flex items-end justify-between">
-            <div>
-              <h2 className="text-2xl font-bold text-zinc-900 sm:text-3xl">Combos</h2>
-              <p className="mt-1 text-sm text-zinc-500">Ahorrá más llevando el pack completo.</p>
-            </div>
-            <Link href="/combos" className="hidden text-sm font-semibold text-brand hover:text-brand sm:block">
-              Ver todos →
-            </Link>
-          </div>
-
-          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {combos.map((combo) => (
-              <ComboCard key={combo.id} combo={combo} showComboBadge />
-            ))}
-          </div>
-        </section>
-      ) : null}
+      <FeaturedCombosSection combos={combos} />
 
       {brands.length > 0 ? (
         <section className="mx-auto max-w-6xl px-4 py-12 sm:px-6">
@@ -125,25 +89,9 @@ export default async function HomePage() {
         </section>
       ) : null}
 
-      {products.length > 0 ? (
-        <section className="mx-auto max-w-6xl px-4 py-12 sm:px-6">
-          <div className="mb-6 flex items-end justify-between">
-            <div>
-              <h2 className="text-2xl font-bold text-zinc-900 sm:text-3xl">Productos destacados</h2>
-              <p className="mt-1 text-sm text-zinc-500">Lo último que sumamos al catálogo.</p>
-            </div>
-            <Link href="/productos" className="hidden text-sm font-semibold text-brand hover:text-brand sm:block">
-              Ver catálogo →
-            </Link>
-          </div>
+      <FeaturedProductsSection products={products} />
 
-          <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 sm:gap-6 lg:grid-cols-4">
-            {products.map((product) => (
-              <ProductCard key={product.id} product={product} />
-            ))}
-          </div>
-        </section>
-      ) : null}
+      <TestimonialsSection testimonials={testimonials} />
     </div>
   );
 }

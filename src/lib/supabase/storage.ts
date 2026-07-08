@@ -57,3 +57,28 @@ export async function deleteBrandLogo(path: string) {
     throw error;
   }
 }
+
+export async function uploadTestimonialPhoto(file: File, path: string) {
+  const supabase = await createClient();
+
+  const { data, error } = await supabase.storage.from("testimonials").upload(path, file, {
+    upsert: true,
+    contentType: file.type,
+  });
+
+  if (error) {
+    throw error;
+  }
+
+  return data;
+}
+
+export async function deleteTestimonialPhoto(path: string) {
+  const supabase = await createClient();
+
+  const { error } = await supabase.storage.from("testimonials").remove([path]);
+
+  if (error) {
+    throw error;
+  }
+}

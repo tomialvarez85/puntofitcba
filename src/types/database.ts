@@ -102,3 +102,13 @@ export interface PromotionTarget {
   price: number;
   active: boolean;
 }
+
+export interface Testimonial {
+  id: string;
+  customer_name: string;
+  review_text: string;
+  photo_url: string | null;
+  display_order: number;
+  active: boolean;
+  created_at: string;
+}

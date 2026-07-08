@@ -8,7 +8,7 @@ import { CartProvider } from "@/context/CartContext";
 export default function PublicLayout({ children }: { children: ReactNode }) {
   return (
     <CartProvider>
-      <div className="flex min-h-screen flex-col bg-white text-zinc-900">
+      <div className="flex min-h-screen flex-col text-zinc-900">
         <SiteHeader />
         <main className="flex-1">{children}</main>
         <SiteFooter />
