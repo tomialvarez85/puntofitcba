@@ -1,5 +1,13 @@
 @import "tailwindcss";
 
+/*
+ * Sitio intencionalmente solo en modo claro por ahora. Si en el futuro se
+ * agrega una clase dark:, esta variante evita que se active automáticamente
+ * por el prefers-color-scheme del sistema operativo del visitante — solo se
+ * activaría si explícitamente ponemos className="dark" en un ancestro.
+ */
+@custom-variant dark (&:where(.dark, .dark *));
+
 :root {
   --background: #ffffff;
   --foreground: #171717;
@@ -14,13 +22,6 @@
   --color-brand-dark: #3d4449;
   --color-brand-light: #e4e5e6;
   --color-brand-tint: #9aa3ab;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
 }
 
 body {
