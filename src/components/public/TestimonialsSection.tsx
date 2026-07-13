@@ -37,7 +37,7 @@ function TestimonialCard({ testimonial }: { testimonial: Testimonial }) {
   return (
     <div className="flex h-full flex-col rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm">
       <Quote size={28} className="text-brand-light" aria-hidden="true" />
-      <p className="mt-3 flex-1 text-sm leading-relaxed text-zinc-600">{testimonial.review_text}</p>
+      <p className="mt-3 line-clamp-4 flex-1 text-sm leading-relaxed text-zinc-600">{testimonial.review_text}</p>
       <div className="mt-5 flex items-center gap-3">
         {testimonial.photo_url ? (
           <div className="relative h-11 w-11 flex-shrink-0 overflow-hidden rounded-full">

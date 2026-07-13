@@ -19,8 +19,8 @@ export default function ProductCard({ product }: ProductCardProps) {
   const hasDiscount = product.hasDiscount ?? false;
 
   return (
-    <div className="group overflow-hidden rounded-2xl border border-zinc-200 bg-white shadow-sm transition hover:shadow-lg">
-      <Link href={`/productos/${product.slug}`} className="block">
+    <div className="group flex h-full flex-col overflow-hidden rounded-2xl border border-zinc-200 bg-white shadow-sm transition hover:shadow-lg">
+      <Link href={`/productos/${product.slug}`} className="flex flex-1 flex-col">
         <div className="relative aspect-square w-full overflow-hidden bg-zinc-100">
           {primaryImage ? (
             <Image
@@ -40,13 +40,13 @@ export default function ProductCard({ product }: ProductCardProps) {
           ) : null}
         </div>
 
-        <div className="px-3 pt-3 sm:px-4 sm:pt-4">
+        <div className="flex flex-1 flex-col px-3 pt-3 sm:px-4 sm:pt-4">
           {product.category ? (
             <p className="text-xs uppercase tracking-wide text-zinc-400">{product.category.name}</p>
           ) : null}
           <h3 className="mt-1 line-clamp-2 text-sm font-medium text-zinc-900 sm:text-base">{product.name}</h3>
 
-          <div className="mt-2 flex items-baseline gap-2">
+          <div className="mt-auto flex items-baseline gap-2 pt-2">
             {hasDiscount ? (
               <>
                 <span className="text-xs text-zinc-400 line-through">${originalPrice.toFixed(2)}</span>
