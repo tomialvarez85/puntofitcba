@@ -4,14 +4,39 @@ import type { Brand, ComboWithItems, Product, PromotionWithLinks } from "@/types
 
 export { getCategories } from "@/lib/data/categories";
 
-export async function getBrandsWithProducts(): Promise<Brand[]> {
+export async function getBrandsWithProducts(categorySlug?: string): Promise<Brand[]> {
   const supabase = await createClient();
 
-  const { data, error } = await supabase
+  let categoryId: string | null = null;
+
+  if (categorySlug) {
+    const { data: category, error: categoryError } = await supabase
+      .from("categories")
+      .select("id")
+      .eq("slug", categorySlug)
+      .maybeSingle();
+
+    if (categoryError) {
+      throw categoryError;
+    }
+
+    if (!category) {
+      return [];
+    }
+
+    categoryId = category.id;
+  }
+
+  let query = supabase
     .from("brands")
     .select("id, name, slug, logo_url, created_at, products:products!inner(id)")
-    .eq("products.active", true)
-    .order("name", { ascending: true });
+    .eq("products.active", true);
+
+  if (categoryId) {
+    query = query.eq("products.category_id", categoryId);
+  }
+
+  const { data, error } = await query.order("name", { ascending: true });
 
   if (error) {
     throw error;

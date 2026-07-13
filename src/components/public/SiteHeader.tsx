@@ -1,18 +1,46 @@
 "use client";
 
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { ShoppingCart } from "lucide-react";
+import { ChevronDown, ShoppingCart } from "lucide-react";
 import { useCart } from "@/context/CartContext";
+import type { Category } from "@/types/database";
 
 const navItems = [
-  { label: "Catálogo", href: "/productos" },
   { label: "Combos", href: "/combos" },
   { label: "Promociones", href: "/promociones" },
 ];
 
-export default function SiteHeader() {
+type SiteHeaderProps = {
+  categories: Category[];
+};
+
+export default function SiteHeader({ categories }: SiteHeaderProps) {
   const { totalItems, openCart } = useCart();
+  const [isProductsOpen, setIsProductsOpen] = useState(false);
+  const productsMenuRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (productsMenuRef.current && !productsMenuRef.current.contains(event.target as Node)) {
+        setIsProductsOpen(false);
+      }
+    }
+
+    function handleEscape(event: KeyboardEvent) {
+      if (event.key === "Escape") {
+        setIsProductsOpen(false);
+      }
+    }
+
+    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener("keydown", handleEscape);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("keydown", handleEscape);
+    };
+  }, []);
 
   return (
     <header className="sticky top-0 z-40 border-b border-zinc-200 bg-white text-zinc-900">
@@ -25,7 +53,63 @@ export default function SiteHeader() {
           </span>
         </Link>
 
-        <nav className="order-3 flex w-full items-center gap-5 overflow-x-auto text-sm font-medium text-zinc-600 sm:order-none sm:w-auto sm:gap-6">
+        <nav className="order-3 flex w-full flex-wrap items-center gap-x-5 gap-y-2 text-sm font-medium text-zinc-600 sm:order-none sm:w-auto sm:flex-nowrap sm:gap-x-6">
+          <div ref={productsMenuRef} className="group relative">
+            <div className="flex items-center gap-1">
+              <Link href="/productos" className="whitespace-nowrap transition hover:text-brand">
+                Productos
+              </Link>
+              <button
+                type="button"
+                onClick={() => setIsProductsOpen((open) => !open)}
+                aria-expanded={isProductsOpen}
+                aria-haspopup="true"
+                aria-label="Mostrar categorías de productos"
+                className="flex-shrink-0 text-zinc-400 transition hover:text-brand"
+              >
+                <ChevronDown
+                  size={14}
+                  className={`transition-transform duration-150 ${isProductsOpen ? "rotate-180" : ""}`}
+                />
+              </button>
+            </div>
+
+            <div
+              role="menu"
+              className={`absolute left-0 top-full z-50 mt-2 max-h-[70vh] w-56 max-w-[calc(100vw-2rem)] overflow-y-auto rounded-xl border border-zinc-100 bg-white py-2 shadow-lg transition duration-150 ease-out ${
+                isProductsOpen
+                  ? "visible translate-y-0 opacity-100"
+                  : "invisible -translate-y-1 opacity-0 sm:group-hover:visible sm:group-hover:translate-y-0 sm:group-hover:opacity-100"
+              }`}
+            >
+              <Link
+                href="/productos"
+                role="menuitem"
+                onClick={() => setIsProductsOpen(false)}
+                className="block whitespace-nowrap px-4 py-2 text-sm font-semibold text-zinc-900 transition hover:bg-zinc-50 hover:text-brand"
+              >
+                Ver todos los productos
+              </Link>
+
+              {categories.length > 0 ? (
+                <>
+                  <div className="my-1 border-t border-zinc-100" />
+                  {categories.map((category) => (
+                    <Link
+                      key={category.id}
+                      href={`/productos?categoria=${category.slug}`}
+                      role="menuitem"
+                      onClick={() => setIsProductsOpen(false)}
+                      className="block whitespace-nowrap px-4 py-2 text-sm text-zinc-600 transition hover:bg-zinc-50 hover:text-brand"
+                    >
+                      {category.name}
+                    </Link>
+                  ))}
+                </>
+              ) : null}
+            </div>
+          </div>
+
           {navItems.map((item) => (
             <Link key={item.href} href={item.href} className="whitespace-nowrap transition hover:text-brand">
               {item.label}

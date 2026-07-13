@@ -20,7 +20,7 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
   const [products, categories, brands] = await Promise.all([
     getCatalogProducts({ categorySlug, brandSlug, searchTerm, sortBy }),
     getCategories(),
-    getBrandsWithProducts(),
+    getBrandsWithProducts(categorySlug),
   ]);
 
   return (
