@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { ChevronDown, ShoppingCart } from "lucide-react";
+import { ChevronDown, Lock, ShoppingCart } from "lucide-react";
 import { useCart } from "@/context/CartContext";
 import type { Category } from "@/types/database";
 
@@ -117,17 +117,28 @@ export default function SiteHeader({ categories }: SiteHeaderProps) {
           ))}
         </nav>
 
-        <button
-          type="button"
-          onClick={openCart}
-          aria-label={`Carrito de compras, ${totalItems} producto${totalItems === 1 ? "" : "s"}`}
-          className="relative inline-flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full border border-zinc-700 text-zinc-300 transition hover:bg-zinc-800"
-        >
-          <ShoppingCart size={18} />
-          <span className="absolute -right-1 -top-1 flex h-4 w-4 items-center justify-center rounded-full bg-brand text-[10px] font-bold text-white">
-            {totalItems}
-          </span>
-        </button>
+        <div className="flex flex-shrink-0 items-center gap-1">
+          <Link
+            href="/admin/login"
+            aria-label="Acceso administrador"
+            title="Acceso administrador"
+            className="inline-flex h-10 w-10 items-center justify-center rounded-full text-zinc-500 transition hover:bg-zinc-800 hover:text-zinc-300"
+          >
+            <Lock size={16} />
+          </Link>
+
+          <button
+            type="button"
+            onClick={openCart}
+            aria-label={`Carrito de compras, ${totalItems} producto${totalItems === 1 ? "" : "s"}`}
+            className="relative inline-flex h-10 w-10 items-center justify-center rounded-full border border-zinc-700 text-zinc-300 transition hover:bg-zinc-800"
+          >
+            <ShoppingCart size={18} />
+            <span className="absolute -right-1 -top-1 flex h-4 w-4 items-center justify-center rounded-full bg-brand text-[10px] font-bold text-white">
+              {totalItems}
+            </span>
+          </button>
+        </div>
       </div>
     </header>
   );

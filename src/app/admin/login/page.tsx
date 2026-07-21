@@ -2,6 +2,7 @@
 
 import { FormEvent, useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { createClient } from "@/lib/supabase/client";
 
 export default function AdminLoginPage() {
@@ -80,6 +81,13 @@ export default function AdminLoginPage() {
         >
           {loading ? "Ingresando..." : "Ingresar"}
         </button>
+
+        <Link
+          href="/"
+          className="mt-3 block w-full rounded-lg border border-zinc-700 px-4 py-2 text-center text-sm font-medium text-zinc-300 transition hover:bg-zinc-800"
+        >
+          Volver al inicio
+        </Link>
 
         {message ? <p className="mt-4 text-sm text-zinc-300">{message}</p> : null}
       </form>
