@@ -47,49 +47,6 @@ export async function getBrandsWithProducts(categorySlug?: string): Promise<Bran
   return rows.map(({ products: _products, ...brand }) => brand);
 }
 
-export async function getHeroImages(limit = 12): Promise<string[]> {
-  const supabase = await createClient();
-
-  const { data, error } = await supabase
-    .from("products")
-    .select(
-      `
-        id,
-        active,
-        created_at,
-        images:product_images(url, is_primary, sort_order)
-      `,
-    )
-    .eq("active", true)
-    .order("created_at", { ascending: false })
-    .limit(50);
-
-  if (error) {
-    throw error;
-  }
-
-  const products = (data as unknown as Product[]) ?? [];
-
-  const urls = products
-    .map((product) => {
-      const images = product.images ?? [];
-      if (images.length === 0) {
-        return null;
-      }
-
-      const primaryImage = images.find((image) => image.is_primary) ?? images[0];
-      return primaryImage.url;
-    })
-    .filter((url): url is string => Boolean(url));
-
-  for (let i = urls.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [urls[i], urls[j]] = [urls[j], urls[i]];
-  }
-
-  return urls.slice(0, limit);
-}
-
 export type CatalogSortBy = "newest" | "price_asc" | "price_desc";
 
 function sanitizeSearchTerm(term: string) {

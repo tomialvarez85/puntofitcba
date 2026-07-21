@@ -26,9 +26,9 @@ export default function CartPage() {
   if (hasSubmitted) {
     return (
       <div className="mx-auto flex max-w-xl flex-col items-center px-4 py-16 text-center sm:px-6">
-        <ShoppingBag size={48} className="text-brand" />
-        <h1 className="mt-4 text-2xl font-bold text-zinc-900">¡Listo! Te llevamos a WhatsApp</h1>
-        <p className="mt-2 text-sm text-zinc-500">
+        <ShoppingBag size={48} className="text-brand-tint" />
+        <h1 className="mt-4 text-2xl font-bold text-white">¡Listo! Te llevamos a WhatsApp</h1>
+        <p className="mt-2 text-sm text-zinc-400">
           Confirmá el envío del mensaje para cerrar tu pedido con Punto Fit CBA.
         </p>
         <Link
@@ -87,14 +87,14 @@ export default function CartPage() {
 
   return (
     <div className="mx-auto max-w-4xl px-4 py-8 sm:px-6 sm:py-10">
-      <h1 className="text-2xl font-bold text-zinc-900 sm:text-3xl">Tu pedido</h1>
-      <p className="mt-1 text-sm text-zinc-500">Revisá los productos antes de confirmar tu pedido por WhatsApp.</p>
+      <h1 className="text-2xl font-bold text-white sm:text-3xl">Tu pedido</h1>
+      <p className="mt-1 text-sm text-zinc-400">Revisá los productos antes de confirmar tu pedido por WhatsApp.</p>
 
       <div className="mt-8 grid gap-8 lg:grid-cols-3 lg:gap-10">
         <div className="space-y-4 lg:col-span-2">
           {items.map((item) => (
-            <div key={`${item.type}-${item.id}`} className="flex gap-4 rounded-2xl border border-zinc-200 bg-white p-4">
-              <div className="relative h-20 w-20 flex-shrink-0 overflow-hidden rounded-lg bg-zinc-100">
+            <div key={`${item.type}-${item.id}`} className="flex gap-4 rounded-2xl border border-zinc-800 bg-zinc-900 p-4">
+              <div className="relative h-20 w-20 flex-shrink-0 overflow-hidden rounded-lg bg-zinc-800">
                 {item.imageUrl ? (
                   <Image src={item.imageUrl} alt={item.name} fill className="object-cover" />
                 ) : (
@@ -104,27 +104,27 @@ export default function CartPage() {
 
               <div className="flex flex-1 flex-col justify-between">
                 <div>
-                  <p className="text-sm font-medium text-zinc-900">{item.name}</p>
-                  <p className="mt-1 text-sm font-semibold text-brand">${item.unitPrice.toFixed(2)} c/u</p>
+                  <p className="text-sm font-medium text-white">{item.name}</p>
+                  <p className="mt-1 text-sm font-semibold text-brand-tint">${item.unitPrice.toFixed(2)} c/u</p>
                 </div>
 
                 <div className="mt-2 flex items-center justify-between">
-                  <div className="flex items-center rounded-lg border border-zinc-300">
+                  <div className="flex items-center rounded-lg border border-zinc-700">
                     <button
                       type="button"
                       onClick={() => updateQuantity(item.type, item.id, item.quantity - 1)}
                       disabled={item.quantity <= 1}
-                      className="flex h-8 w-8 items-center justify-center text-zinc-600 disabled:opacity-30"
+                      className="flex h-8 w-8 items-center justify-center text-zinc-300 disabled:opacity-30"
                       aria-label="Restar cantidad"
                     >
                       <Minus size={14} />
                     </button>
-                    <span className="w-8 text-center text-sm font-semibold text-zinc-900">{item.quantity}</span>
+                    <span className="w-8 text-center text-sm font-semibold text-white">{item.quantity}</span>
                     <button
                       type="button"
                       onClick={() => updateQuantity(item.type, item.id, item.quantity + 1)}
                       disabled={typeof item.stock === "number" && item.quantity >= item.stock}
-                      className="flex h-8 w-8 items-center justify-center text-zinc-600 disabled:opacity-30"
+                      className="flex h-8 w-8 items-center justify-center text-zinc-300 disabled:opacity-30"
                       aria-label="Sumar cantidad"
                     >
                       <Plus size={14} />
@@ -132,14 +132,14 @@ export default function CartPage() {
                   </div>
 
                   <div className="flex items-center gap-3">
-                    <span className="text-sm font-semibold text-zinc-900">
+                    <span className="text-sm font-semibold text-white">
                       ${(item.unitPrice * item.quantity).toFixed(2)}
                     </span>
                     <button
                       type="button"
                       onClick={() => removeItem(item.type, item.id)}
                       aria-label="Eliminar del carrito"
-                      className="text-zinc-400 transition hover:text-red-500"
+                      className="text-zinc-500 transition hover:text-red-500"
                     >
                       <Trash2 size={16} />
                     </button>
@@ -150,15 +150,15 @@ export default function CartPage() {
           ))}
         </div>
 
-        <div className="h-fit rounded-2xl border border-zinc-200 bg-zinc-50 p-5 lg:sticky lg:top-24">
-          <div className="flex items-center justify-between text-base font-semibold text-zinc-900">
+        <div className="h-fit rounded-2xl border border-zinc-800 bg-zinc-900 p-5 lg:sticky lg:top-24">
+          <div className="flex items-center justify-between text-base font-semibold text-white">
             <span>Total</span>
             <span>${totalPrice.toFixed(2)}</span>
           </div>
 
           <div className="mt-5 space-y-4">
             <div>
-              <label htmlFor="customerName" className="mb-1 block text-sm font-medium text-zinc-700">
+              <label htmlFor="customerName" className="mb-1 block text-sm font-medium text-zinc-300">
                 Nombre
               </label>
               <input
@@ -166,27 +166,27 @@ export default function CartPage() {
                 value={customerName}
                 onChange={(event) => setCustomerName(event.target.value)}
                 placeholder="Tu nombre"
-                className="w-full rounded-lg border border-zinc-300 bg-white px-3 py-2 text-sm text-zinc-900 outline-none focus:border-brand-dark"
+                className="w-full rounded-lg border border-zinc-700 bg-zinc-950 px-3 py-2 text-sm text-white outline-none placeholder:text-zinc-500 focus:border-brand-tint"
               />
               {nameError ? <p className="mt-1 text-xs text-red-500">{nameError}</p> : null}
             </div>
 
             <div>
-              <label htmlFor="customerPhone" className="mb-1 block text-sm font-medium text-zinc-700">
-                Teléfono <span className="text-zinc-400">(opcional)</span>
+              <label htmlFor="customerPhone" className="mb-1 block text-sm font-medium text-zinc-300">
+                Teléfono <span className="text-zinc-500">(opcional)</span>
               </label>
               <input
                 id="customerPhone"
                 value={customerPhone}
                 onChange={(event) => setCustomerPhone(event.target.value)}
                 placeholder="Ej: 351 000-0000"
-                className="w-full rounded-lg border border-zinc-300 bg-white px-3 py-2 text-sm text-zinc-900 outline-none focus:border-brand-dark"
+                className="w-full rounded-lg border border-zinc-700 bg-zinc-950 px-3 py-2 text-sm text-white outline-none placeholder:text-zinc-500 focus:border-brand-tint"
               />
             </div>
 
             <div>
-              <label htmlFor="notes" className="mb-1 block text-sm font-medium text-zinc-700">
-                Notas <span className="text-zinc-400">(opcional)</span>
+              <label htmlFor="notes" className="mb-1 block text-sm font-medium text-zinc-300">
+                Notas <span className="text-zinc-500">(opcional)</span>
               </label>
               <textarea
                 id="notes"
@@ -194,7 +194,7 @@ export default function CartPage() {
                 onChange={(event) => setNotes(event.target.value)}
                 rows={3}
                 placeholder="Ej: sin sabor a chocolate, entregar después de las 18hs"
-                className="w-full rounded-lg border border-zinc-300 bg-white px-3 py-2 text-sm text-zinc-900 outline-none focus:border-brand-dark"
+                className="w-full rounded-lg border border-zinc-700 bg-zinc-950 px-3 py-2 text-sm text-white outline-none placeholder:text-zinc-500 focus:border-brand-tint"
               />
             </div>
           </div>

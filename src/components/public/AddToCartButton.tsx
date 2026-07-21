@@ -34,7 +34,7 @@ export default function AddToCartButton({ id, type, name, slug, unitPrice, image
       <button
         type="button"
         disabled
-        className="mt-3 flex w-full cursor-not-allowed items-center justify-center gap-1.5 rounded-lg bg-zinc-200 px-3 py-2 text-xs font-semibold text-zinc-400 sm:text-sm"
+        className="mt-3 flex w-full cursor-not-allowed items-center justify-center gap-1.5 rounded-lg bg-zinc-800 px-3 py-2 text-xs font-semibold text-zinc-500 sm:text-sm"
       >
         Sin stock
       </button>

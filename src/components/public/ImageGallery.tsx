@@ -18,7 +18,7 @@ export default function ImageGallery({ images, alt }: ImageGalleryProps) {
 
   if (images.length === 0) {
     return (
-      <div className="flex aspect-square w-full items-center justify-center rounded-2xl bg-zinc-100 text-sm text-zinc-400">
+      <div className="flex aspect-square w-full items-center justify-center rounded-2xl bg-zinc-800 text-sm text-zinc-400">
         Sin imagen
       </div>
     );
@@ -28,7 +28,7 @@ export default function ImageGallery({ images, alt }: ImageGalleryProps) {
 
   return (
     <div>
-      <div className="relative aspect-square w-full overflow-hidden rounded-2xl bg-zinc-100">
+      <div className="relative aspect-square w-full overflow-hidden rounded-2xl bg-zinc-800">
         <Image src={selectedImage.url} alt={alt} fill priority className="object-cover" />
       </div>
 
@@ -40,7 +40,7 @@ export default function ImageGallery({ images, alt }: ImageGalleryProps) {
               type="button"
               onClick={() => setSelectedIndex(index)}
               className={`relative h-16 w-16 flex-shrink-0 overflow-hidden rounded-lg border-2 transition ${
-                index === selectedIndex ? "border-brand" : "border-transparent"
+                index === selectedIndex ? "border-brand-tint" : "border-transparent"
               }`}
             >
               <Image src={image.url} alt={`${alt} miniatura ${index + 1}`} fill className="object-cover" />

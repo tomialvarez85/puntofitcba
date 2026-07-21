@@ -57,7 +57,7 @@ export default function HorizontalSlider<T>({
             <span
               key={getKey(item)}
               className={`h-1.5 rounded-full transition-all ${
-                index === activeIndex ? "w-4 bg-brand" : "w-1.5 bg-zinc-300"
+                index === activeIndex ? "w-4 bg-brand" : "w-1.5 bg-zinc-700"
               }`}
             />
           ))}

@@ -39,31 +39,31 @@ export default async function ComboDetailPage({ params }: ComboDetailPageProps) 
         <ImageGallery images={images} alt={combo.name} />
 
         <div>
-          <p className="text-xs font-semibold uppercase tracking-wide text-brand">Combo</p>
-          <h1 className="mt-1 text-2xl font-bold text-zinc-900 sm:text-3xl">{combo.name}</h1>
+          <p className="text-xs font-semibold uppercase tracking-wide text-brand-tint">Combo</p>
+          <h1 className="mt-1 text-2xl font-bold text-white sm:text-3xl">{combo.name}</h1>
 
           <div className="mt-4 flex flex-wrap items-center gap-3">
             {combo.hasDiscount ? (
               <>
                 <span className="text-base text-zinc-400 line-through">${combo.originalPrice.toFixed(2)}</span>
-                <span className="text-3xl font-bold text-brand">${combo.discountedPrice.toFixed(2)}</span>
+                <span className="text-3xl font-bold text-brand-tint">${combo.discountedPrice.toFixed(2)}</span>
                 <span className="rounded-full bg-red-600 px-3 py-1 text-xs font-bold uppercase tracking-wide text-white">
                   Oferta
                 </span>
               </>
             ) : (
-              <span className="text-3xl font-bold text-brand">${combo.originalPrice.toFixed(2)}</span>
+              <span className="text-3xl font-bold text-brand-tint">${combo.originalPrice.toFixed(2)}</span>
             )}
           </div>
 
           {combo.description ? (
-            <p className="mt-6 whitespace-pre-line text-sm leading-relaxed text-zinc-600">{combo.description}</p>
+            <p className="mt-6 whitespace-pre-line text-sm leading-relaxed text-zinc-300">{combo.description}</p>
           ) : null}
 
           {items.length > 0 ? (
-            <div className="mt-6 rounded-2xl border border-zinc-200 bg-zinc-50 p-4">
-              <h2 className="text-sm font-semibold uppercase tracking-wide text-zinc-500">Incluye</h2>
-              <ul className="mt-3 space-y-2 text-sm text-zinc-700">
+            <div className="mt-6 rounded-2xl border border-zinc-800 bg-zinc-900 p-4">
+              <h2 className="text-sm font-semibold uppercase tracking-wide text-zinc-400">Incluye</h2>
+              <ul className="mt-3 space-y-2 text-sm text-zinc-300">
                 {items.map((item) => (
                   <li key={item.id}>
                     {item.quantity}x {item.product?.name ?? "Producto"}

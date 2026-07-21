@@ -19,9 +19,9 @@ export default function ComboCard({ combo, showComboBadge = false }: ComboCardPr
   const hasDiscount = combo.hasDiscount ?? false;
 
   return (
-    <div className="group flex h-full flex-col overflow-hidden rounded-2xl border border-zinc-200 bg-white shadow-sm transition hover:shadow-lg">
+    <div className="group flex h-full flex-col overflow-hidden rounded-2xl border border-zinc-800 bg-zinc-900 shadow-sm transition hover:shadow-lg">
       <Link href={`/combos/${combo.slug}`} className="flex flex-1 flex-col">
-        <div className="relative aspect-[4/3] w-full overflow-hidden bg-zinc-100">
+        <div className="relative aspect-[4/3] w-full overflow-hidden bg-zinc-800">
           {combo.image_url ? (
             <Image
               src={combo.image_url}
@@ -45,10 +45,10 @@ export default function ComboCard({ combo, showComboBadge = false }: ComboCardPr
         </div>
 
         <div className="flex flex-1 flex-col px-4 pt-4 sm:px-5 sm:pt-5">
-          <h3 className="line-clamp-2 text-lg font-semibold text-zinc-900">{combo.name}</h3>
+          <h3 className="line-clamp-2 text-lg font-semibold text-white">{combo.name}</h3>
 
           {items.length > 0 ? (
-            <ul className="mt-2 space-y-0.5 text-sm text-zinc-500">
+            <ul className="mt-2 space-y-0.5 text-sm text-zinc-400">
               {items.slice(0, 3).map((item) => (
                 <li key={item.id} className="truncate">
                   {item.quantity > 1 ? `${item.quantity}x ` : ""}
@@ -63,10 +63,10 @@ export default function ComboCard({ combo, showComboBadge = false }: ComboCardPr
             {hasDiscount ? (
               <>
                 <span className="text-sm text-zinc-400 line-through">${originalPrice.toFixed(2)}</span>
-                <span className="text-2xl font-bold text-brand">${discountedPrice.toFixed(2)}</span>
+                <span className="text-2xl font-bold text-brand-tint">${discountedPrice.toFixed(2)}</span>
               </>
             ) : (
-              <span className="text-2xl font-bold text-brand">${originalPrice.toFixed(2)}</span>
+              <span className="text-2xl font-bold text-brand-tint">${originalPrice.toFixed(2)}</span>
             )}
           </div>
         </div>

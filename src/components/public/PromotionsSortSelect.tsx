@@ -30,7 +30,7 @@ export default function PromotionsSortSelect() {
     <select
       value={activeSort}
       onChange={(event) => handleChange(event.target.value)}
-      className="rounded-lg border border-zinc-300 bg-white px-3 py-2 text-sm text-zinc-700 outline-none"
+      className="rounded-lg border border-zinc-700 bg-zinc-900 px-3 py-2 text-sm text-zinc-300 outline-none"
     >
       {SORT_OPTIONS.map((option) => (
         <option key={option.value} value={option.value}>

@@ -25,10 +25,10 @@ export default function FeaturedProductsSection({ products }: FeaturedProductsSe
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <div className="mb-6 flex items-end justify-between">
           <div>
-            <h2 className="text-2xl font-bold text-zinc-900 sm:text-3xl">Productos destacados</h2>
-            <p className="mt-1 text-sm text-zinc-500">Lo último que sumamos al catálogo.</p>
+            <h2 className="text-2xl font-bold text-white sm:text-3xl">Productos destacados</h2>
+            <p className="mt-1 text-sm text-zinc-400">Lo último que sumamos al catálogo.</p>
           </div>
-          <Link href="/productos" className="hidden text-sm font-semibold text-brand hover:text-brand sm:block">
+          <Link href="/productos" className="hidden text-sm font-semibold text-brand-tint hover:text-brand-tint sm:block">
             Ver catálogo →
           </Link>
         </div>

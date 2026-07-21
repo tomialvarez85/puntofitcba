@@ -5,9 +5,17 @@ export default function SiteFooter() {
         <div>
           <h3 className="text-sm font-semibold uppercase tracking-[0.2em] text-white">Contacto</h3>
           <ul className="mt-3 space-y-1 text-sm">
-            <li>WhatsApp: +54 9 351 000-0000</li>
-            <li>Email: hola@puntofitcba.com</li>
-            <li>Córdoba, Argentina</li>
+            <li>
+              <a
+                href="https://wa.me/5493516536195"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="transition hover:text-white"
+              >
+                WhatsApp: +54 9 351 6536195
+              </a>
+            </li>
+            <li>Av. Vélez Sarsfield 372, Córdoba, Argentina</li>
           </ul>
         </div>
 
@@ -17,11 +25,6 @@ export default function SiteFooter() {
             <li>
               <a href="#" className="transition hover:text-white">
                 Instagram
-              </a>
-            </li>
-            <li>
-              <a href="#" className="transition hover:text-white">
-                Facebook
               </a>
             </li>
           </ul>

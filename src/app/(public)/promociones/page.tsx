@@ -21,14 +21,14 @@ export default async function PromocionesPage({ searchParams }: PromocionesPageP
   return (
     <div className="mx-auto max-w-6xl px-4 py-8 sm:px-6 sm:py-10">
       <div className="mb-6">
-        <h1 className="text-2xl font-bold text-zinc-900 sm:text-3xl">Promociones activas</h1>
-        <p className="mt-1 text-sm text-zinc-500">Productos y combos con descuento por tiempo limitado.</p>
+        <h1 className="text-2xl font-bold text-white sm:text-3xl">Promociones activas</h1>
+        <p className="mt-1 text-sm text-zinc-400">Productos y combos con descuento por tiempo limitado.</p>
       </div>
 
       {items.length === 0 ? (
-        <div className="mt-10 rounded-2xl border border-dashed border-zinc-300 bg-zinc-50 p-10 text-center text-zinc-500">
+        <div className="mt-10 rounded-2xl border border-dashed border-zinc-700 bg-zinc-900 p-10 text-center text-zinc-400">
           <p>No hay promociones activas en este momento.</p>
-          <Link href="/productos" className="mt-3 inline-block text-sm font-semibold text-brand hover:underline">
+          <Link href="/productos" className="mt-3 inline-block text-sm font-semibold text-brand-tint hover:underline">
             Mirá nuestro catálogo completo →
           </Link>
         </div>

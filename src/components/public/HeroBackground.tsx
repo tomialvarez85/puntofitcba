@@ -1,33 +1,25 @@
 import Image from "next/image";
 
-type HeroBackgroundProps = {
-  images: string[];
-};
+const HERO_IMAGES = ["/hero/2.png", "/hero/4.png"];
 
-const GRID_SIZE = 12;
-const GRID_TEMPLATE =
-  "grid-cols-2 grid-rows-6 sm:grid-cols-3 sm:grid-rows-4 md:grid-cols-4 md:grid-rows-3 lg:grid-cols-6 lg:grid-rows-2";
+// Checkerboard order tuned for the desktop 4-col x 2-row layout so no image
+// repeats in the same column across the two rows.
+const CELL_ORDER = [0, 1, 0, 1, 1, 0, 1, 0];
 
-export default function HeroBackground({ images }: HeroBackgroundProps) {
-  const cells =
-    images.length > 0 ? Array.from({ length: GRID_SIZE }, (_, index) => images[index % images.length]) : [];
-
-  if (cells.length === 0) {
-    return <div className="absolute inset-0 bg-brand" />;
-  }
-
+export default function HeroBackground() {
   return (
     <div className="absolute inset-0 overflow-hidden">
-      <div className={`absolute inset-0 grid ${GRID_TEMPLATE}`}>
-        {cells.map((url, index) => (
-          <div key={`${url}-${index}`} className="relative">
+      <div className="absolute inset-0 grid grid-cols-2 grid-rows-4 sm:grid-cols-4 sm:grid-rows-2">
+        {CELL_ORDER.map((imageIndex, cellIndex) => (
+          <div key={cellIndex} className="relative">
             <Image
-              src={url}
+              src={HERO_IMAGES[imageIndex]}
               alt=""
               fill
               className="object-cover"
-              priority={index === 0}
-              sizes="(min-width: 1024px) 16.67vw, (min-width: 640px) 33vw, 50vw"
+              priority={cellIndex < 2}
+              loading={cellIndex < 2 ? undefined : "lazy"}
+              sizes="(min-width: 640px) 25vw, 50vw"
             />
           </div>
         ))}

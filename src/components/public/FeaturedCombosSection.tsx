@@ -25,10 +25,10 @@ export default function FeaturedCombosSection({ combos }: FeaturedCombosSectionP
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <div className="mb-6 flex items-end justify-between">
           <div>
-            <h2 className="text-2xl font-bold text-zinc-900 sm:text-3xl">Combos</h2>
-            <p className="mt-1 text-sm text-zinc-500">Ahorrá más llevando el pack completo.</p>
+            <h2 className="text-2xl font-bold text-white sm:text-3xl">Combos</h2>
+            <p className="mt-1 text-sm text-zinc-400">Ahorrá más llevando el pack completo.</p>
           </div>
-          <Link href="/combos" className="hidden text-sm font-semibold text-brand hover:text-brand sm:block">
+          <Link href="/combos" className="hidden text-sm font-semibold text-brand-tint hover:text-brand-tint sm:block">
             Ver todos →
           </Link>
         </div>

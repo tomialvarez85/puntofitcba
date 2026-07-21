@@ -47,31 +47,31 @@ export default async function ProductDetailPage({ params }: ProductDetailPagePro
 
         <div>
           {product.category ? (
-            <p className="text-xs font-semibold uppercase tracking-wide text-brand">{product.category.name}</p>
+            <p className="text-xs font-semibold uppercase tracking-wide text-brand-tint">{product.category.name}</p>
           ) : null}
 
-          <h1 className="mt-1 text-2xl font-bold text-zinc-900 sm:text-3xl">{product.name}</h1>
+          <h1 className="mt-1 text-2xl font-bold text-white sm:text-3xl">{product.name}</h1>
 
           <div className="mt-4 flex flex-wrap items-center gap-3">
             {product.hasDiscount ? (
               <>
                 <span className="text-base text-zinc-400 line-through">${product.originalPrice.toFixed(2)}</span>
-                <span className="text-3xl font-bold text-brand">${product.discountedPrice.toFixed(2)}</span>
+                <span className="text-3xl font-bold text-brand-tint">${product.discountedPrice.toFixed(2)}</span>
                 <span className="rounded-full bg-red-600 px-3 py-1 text-xs font-bold uppercase tracking-wide text-white">
                   Oferta
                 </span>
               </>
             ) : (
-              <span className="text-3xl font-bold text-brand">${product.originalPrice.toFixed(2)}</span>
+              <span className="text-3xl font-bold text-brand-tint">${product.originalPrice.toFixed(2)}</span>
             )}
           </div>
 
-          <p className="mt-2 text-sm text-zinc-500">
+          <p className="mt-2 text-sm text-zinc-400">
             {product.stock > 0 ? `${product.stock} unidades disponibles` : "Sin stock"}
           </p>
 
           {product.description ? (
-            <p className="mt-6 whitespace-pre-line text-sm leading-relaxed text-zinc-600">{product.description}</p>
+            <p className="mt-6 whitespace-pre-line text-sm leading-relaxed text-zinc-300">{product.description}</p>
           ) : null}
 
           <div className="mt-8">
@@ -90,7 +90,7 @@ export default async function ProductDetailPage({ params }: ProductDetailPagePro
 
       {relatedProducts.length > 0 ? (
         <section className="mt-14">
-          <h2 className="text-xl font-bold text-zinc-900 sm:text-2xl">Productos relacionados</h2>
+          <h2 className="text-xl font-bold text-white sm:text-2xl">Productos relacionados</h2>
           <div className="mt-6 grid grid-cols-2 gap-4 sm:grid-cols-3 sm:gap-6 lg:grid-cols-4">
             {relatedProducts.map((related) => (
               <RelatedProductCard key={related.id} product={related} />
@@ -109,9 +109,9 @@ function RelatedProductCard({ product }: { product: Product }) {
   return (
     <Link
       href={`/productos/${product.slug}`}
-      className="group block overflow-hidden rounded-2xl border border-zinc-200 bg-white shadow-sm transition hover:shadow-lg"
+      className="group block overflow-hidden rounded-2xl border border-zinc-800 bg-zinc-900 shadow-sm transition hover:shadow-lg"
     >
-      <div className="relative aspect-square w-full overflow-hidden bg-zinc-100">
+      <div className="relative aspect-square w-full overflow-hidden bg-zinc-800">
         {primaryImage ? (
           <Image
             src={primaryImage.url}
@@ -125,8 +125,8 @@ function RelatedProductCard({ product }: { product: Product }) {
       </div>
 
       <div className="p-3 sm:p-4">
-        <h3 className="line-clamp-2 text-sm font-medium text-zinc-900 sm:text-base">{product.name}</h3>
-        <p className="mt-2 text-lg font-bold text-brand">${Number(product.price).toFixed(2)}</p>
+        <h3 className="line-clamp-2 text-sm font-medium text-white sm:text-base">{product.name}</h3>
+        <p className="mt-2 text-lg font-bold text-brand-tint">${Number(product.price).toFixed(2)}</p>
       </div>
     </Link>
   );
