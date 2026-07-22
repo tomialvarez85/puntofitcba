@@ -48,7 +48,7 @@ export default function SiteHeader({ categories }: SiteHeaderProps) {
         <Link href="/" className="flex items-center gap-2.5 leading-none">
           <Image src="/logo-icon.png" alt="Punto Fit CBA" width={40} height={40} className="h-10 w-10" priority />
           <span className="flex flex-col">
-            <span className="text-base font-bold tracking-tight text-brand-tint">PUNTO FIT CBA</span>
+            <span className="text-base font-bold tracking-tight text-brand-tint">PUNTOFITCBA</span>
             <span className="text-[10px] font-medium uppercase tracking-[0.3em] text-zinc-400">Suplementos</span>
           </span>
         </Link>
