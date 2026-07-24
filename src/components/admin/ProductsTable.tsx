@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
 import { deleteProduct, toggleProductActive } from "@/lib/actions/products";
+import { formatPrice } from "@/lib/utils/format";
 import type { Product } from "@/types/database";
 
 type ProductsTableProps = {
@@ -97,7 +98,7 @@ export default function ProductsTable({ products }: ProductsTableProps) {
                     </td>
                     <td className="px-4 py-4 text-zinc-300">{categoryName}</td>
                     <td className="px-4 py-4 text-zinc-300">{brandName}</td>
-                    <td className="px-4 py-4 text-zinc-300">${Number(product.price).toFixed(2)}</td>
+                    <td className="px-4 py-4 text-zinc-300">{formatPrice(Number(product.price))}</td>
                     <td className="px-4 py-4 text-zinc-300">{product.stock}</td>
                     <td className="px-4 py-4">
                       <button

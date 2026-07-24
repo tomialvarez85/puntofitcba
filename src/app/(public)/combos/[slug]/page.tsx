@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import AddToCartControls from "@/components/public/AddToCartControls";
 import ImageGallery from "@/components/public/ImageGallery";
 import { getComboBySlug } from "@/lib/data/public";
+import { formatPrice } from "@/lib/utils/format";
 
 type ComboDetailPageProps = {
   params: Promise<{ slug: string }>;
@@ -45,14 +46,14 @@ export default async function ComboDetailPage({ params }: ComboDetailPageProps) 
           <div className="mt-4 flex flex-wrap items-center gap-3">
             {combo.hasDiscount ? (
               <>
-                <span className="text-base text-zinc-400 line-through">${combo.originalPrice.toFixed(2)}</span>
-                <span className="text-3xl font-bold text-brand-tint">${combo.discountedPrice.toFixed(2)}</span>
+                <span className="text-base text-zinc-400 line-through">{formatPrice(combo.originalPrice)}</span>
+                <span className="text-3xl font-bold text-brand-tint">{formatPrice(combo.discountedPrice)}</span>
                 <span className="rounded-full bg-red-600 px-3 py-1 text-xs font-bold uppercase tracking-wide text-white">
                   Oferta
                 </span>
               </>
             ) : (
-              <span className="text-3xl font-bold text-brand-tint">${combo.originalPrice.toFixed(2)}</span>
+              <span className="text-3xl font-bold text-brand-tint">{formatPrice(combo.originalPrice)}</span>
             )}
           </div>
 

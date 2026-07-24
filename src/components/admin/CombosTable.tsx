@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
 import { deleteCombo, toggleComboActive } from "@/lib/actions/combos";
+import { formatPrice } from "@/lib/utils/format";
 import type { ComboWithItems } from "@/types/database";
 
 type CombosTableProps = {
@@ -91,7 +92,7 @@ export default function CombosTable({ combos }: CombosTableProps) {
                         </div>
                       </div>
                     </td>
-                    <td className="px-4 py-4 text-zinc-300">${Number(combo.price).toFixed(2)}</td>
+                    <td className="px-4 py-4 text-zinc-300">{formatPrice(Number(combo.price))}</td>
                     <td className="px-4 py-4 text-zinc-300">{items.length}</td>
                     <td className="px-4 py-4">
                       <button

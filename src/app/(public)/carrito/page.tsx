@@ -6,6 +6,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Minus, Plus, ShoppingBag, Trash2 } from "lucide-react";
 import { useCart } from "@/context/CartContext";
+import { formatPrice } from "@/lib/utils/format";
 
 export default function CartPage() {
   const router = useRouter();
@@ -55,7 +56,7 @@ export default function CartPage() {
 
     const lines = items.map((item) => {
       const subtotal = item.unitPrice * item.quantity;
-      return `${item.quantity}x ${item.name} - $${item.unitPrice.toFixed(2)} c/u = $${subtotal.toFixed(2)}`;
+      return `${item.quantity}x ${item.name} - ${formatPrice(item.unitPrice)} c/u = ${formatPrice(subtotal)}`;
     });
 
     const messageParts = [
@@ -63,7 +64,7 @@ export default function CartPage() {
       "",
       ...lines,
       "",
-      `*Total: $${totalPrice.toFixed(2)}*`,
+      `*Total: ${formatPrice(totalPrice)}*`,
       "",
       `Cliente: ${customerName.trim()}`,
     ];
@@ -105,7 +106,7 @@ export default function CartPage() {
               <div className="flex flex-1 flex-col justify-between">
                 <div>
                   <p className="text-sm font-medium text-white">{item.name}</p>
-                  <p className="mt-1 text-sm font-semibold text-brand-tint">${item.unitPrice.toFixed(2)} c/u</p>
+                  <p className="mt-1 text-sm font-semibold text-brand-tint">{formatPrice(item.unitPrice)} c/u</p>
                 </div>
 
                 <div className="mt-2 flex items-center justify-between">
@@ -133,7 +134,7 @@ export default function CartPage() {
 
                   <div className="flex items-center gap-3">
                     <span className="text-sm font-semibold text-white">
-                      ${(item.unitPrice * item.quantity).toFixed(2)}
+                      {formatPrice(item.unitPrice * item.quantity)}
                     </span>
                     <button
                       type="button"
@@ -153,7 +154,7 @@ export default function CartPage() {
         <div className="h-fit rounded-2xl border border-zinc-800 bg-zinc-900 p-5 lg:sticky lg:top-24">
           <div className="flex items-center justify-between text-base font-semibold text-white">
             <span>Total</span>
-            <span>${totalPrice.toFixed(2)}</span>
+            <span>{formatPrice(totalPrice)}</span>
           </div>
 
           <div className="mt-5 space-y-4">

@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import AddToCartButton from "@/components/public/AddToCartButton";
+import { formatPrice } from "@/lib/utils/format";
 import type { Product } from "@/types/database";
 
 type ProductCardProps = {
@@ -49,11 +50,11 @@ export default function ProductCard({ product }: ProductCardProps) {
           <div className="mt-auto flex items-baseline gap-2 pt-2">
             {hasDiscount ? (
               <>
-                <span className="text-xs text-zinc-400 line-through">${originalPrice.toFixed(2)}</span>
-                <span className="text-lg font-bold text-brand-tint">${discountedPrice.toFixed(2)}</span>
+                <span className="text-xs text-zinc-400 line-through">{formatPrice(originalPrice)}</span>
+                <span className="text-lg font-bold text-brand-tint">{formatPrice(discountedPrice)}</span>
               </>
             ) : (
-              <span className="text-lg font-bold text-brand-tint">${originalPrice.toFixed(2)}</span>
+              <span className="text-lg font-bold text-brand-tint">{formatPrice(originalPrice)}</span>
             )}
           </div>
         </div>

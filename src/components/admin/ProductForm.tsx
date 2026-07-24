@@ -3,6 +3,7 @@
 import { useMemo, useState, type ChangeEvent, type FormEvent } from "react";
 import { useRouter } from "next/navigation";
 import { createProduct, updateProduct } from "@/lib/actions/products";
+import { formatPrice } from "@/lib/utils/format";
 import type { Brand, Category, Product, ProductImage } from "@/types/database";
 
 const initialErrors = {
@@ -367,7 +368,7 @@ export default function ProductForm({ initialCategories, initialBrands, product,
 
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <p className="text-sm text-zinc-400">
-            Precio: ${priceValue.toFixed(2)} · Stock: {stockValue}
+            Precio: {formatPrice(priceValue)} · Stock: {stockValue}
           </p>
           <button
             type="submit"

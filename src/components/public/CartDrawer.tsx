@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Minus, Plus, ShoppingBag, Trash2, X } from "lucide-react";
 import { useCart } from "@/context/CartContext";
+import { formatPrice } from "@/lib/utils/format";
 
 export default function CartDrawer() {
   const { items, isOpen, closeCart, updateQuantity, removeItem, totalPrice } = useCart();
@@ -54,7 +55,7 @@ export default function CartDrawer() {
 
                   <div className="flex flex-1 flex-col gap-1">
                     <p className="line-clamp-2 text-sm font-medium text-white">{item.name}</p>
-                    <p className="text-sm font-semibold text-brand-tint">${item.unitPrice.toFixed(2)}</p>
+                    <p className="text-sm font-semibold text-brand-tint">{formatPrice(item.unitPrice)}</p>
 
                     <div className="mt-1 flex items-center justify-between">
                       <div className="flex items-center rounded-lg border border-zinc-700">
@@ -96,7 +97,7 @@ export default function CartDrawer() {
             <div className="border-t border-zinc-800 px-5 py-4">
               <div className="mb-4 flex items-center justify-between text-base font-semibold text-white">
                 <span>Total</span>
-                <span>${totalPrice.toFixed(2)}</span>
+                <span>{formatPrice(totalPrice)}</span>
               </div>
               <Link
                 href="/carrito"

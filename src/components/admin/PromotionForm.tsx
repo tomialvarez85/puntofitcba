@@ -3,6 +3,7 @@
 import { useMemo, useState, type ChangeEvent, type FormEvent } from "react";
 import { useRouter } from "next/navigation";
 import { createPromotion, updatePromotion } from "@/lib/actions/promotions";
+import { formatPrice } from "@/lib/utils/format";
 import type { PromotionTarget, PromotionWithLinks } from "@/types/database";
 
 type PromotionFormProps = {
@@ -306,7 +307,7 @@ export default function PromotionForm({ initialTargets, promotion, mode = "creat
                       <p className="text-xs text-zinc-500">{target.type === "product" ? "Producto" : "Combo"}</p>
                     </div>
                   </div>
-                  <div className="text-sm text-zinc-400">${Number(target.price).toFixed(2)}</div>
+                  <div className="text-sm text-zinc-400">{formatPrice(Number(target.price))}</div>
                 </label>
               );
             })}

@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
 import ConfirmDialog from "@/components/admin/ConfirmDialog";
 import { deletePromotion } from "@/lib/actions/promotions";
+import { formatPrice } from "@/lib/utils/format";
 import { getPromotionStatus } from "@/lib/utils/promotion-status";
 import type { PromotionWithLinks } from "@/types/database";
 
@@ -75,7 +76,7 @@ export default function PromotionsTable({ promotions }: PromotionsTableProps) {
                       {promotion.discount_type === "percentage"
                         ? `${promotion.discount_value ?? 0}% OFF`
                         : promotion.discount_type === "fixed_amount"
-                          ? `$${Number(promotion.discount_value ?? 0).toFixed(2)} OFF`
+                          ? `${formatPrice(Number(promotion.discount_value ?? 0))} OFF`
                           : "2x1"}
                     </td>
                     <td className="px-4 py-4">

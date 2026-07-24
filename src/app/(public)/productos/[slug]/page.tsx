@@ -5,6 +5,7 @@ import Link from "next/link";
 import AddToCartControls from "@/components/public/AddToCartControls";
 import ImageGallery from "@/components/public/ImageGallery";
 import { getProductBySlug, getRelatedProducts } from "@/lib/data/public";
+import { formatPrice } from "@/lib/utils/format";
 import type { Product } from "@/types/database";
 
 type ProductDetailPageProps = {
@@ -55,14 +56,14 @@ export default async function ProductDetailPage({ params }: ProductDetailPagePro
           <div className="mt-4 flex flex-wrap items-center gap-3">
             {product.hasDiscount ? (
               <>
-                <span className="text-base text-zinc-400 line-through">${product.originalPrice.toFixed(2)}</span>
-                <span className="text-3xl font-bold text-brand-tint">${product.discountedPrice.toFixed(2)}</span>
+                <span className="text-base text-zinc-400 line-through">{formatPrice(product.originalPrice)}</span>
+                <span className="text-3xl font-bold text-brand-tint">{formatPrice(product.discountedPrice)}</span>
                 <span className="rounded-full bg-red-600 px-3 py-1 text-xs font-bold uppercase tracking-wide text-white">
                   Oferta
                 </span>
               </>
             ) : (
-              <span className="text-3xl font-bold text-brand-tint">${product.originalPrice.toFixed(2)}</span>
+              <span className="text-3xl font-bold text-brand-tint">{formatPrice(product.originalPrice)}</span>
             )}
           </div>
 
@@ -126,7 +127,7 @@ function RelatedProductCard({ product }: { product: Product }) {
 
       <div className="p-3 sm:p-4">
         <h3 className="line-clamp-2 text-sm font-medium text-white sm:text-base">{product.name}</h3>
-        <p className="mt-2 text-lg font-bold text-brand-tint">${Number(product.price).toFixed(2)}</p>
+        <p className="mt-2 text-lg font-bold text-brand-tint">{formatPrice(Number(product.price))}</p>
       </div>
     </Link>
   );

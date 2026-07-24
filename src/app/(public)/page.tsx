@@ -11,6 +11,7 @@ import {
   getFeaturedProducts,
 } from "@/lib/data/public";
 import { getActiveTestimonials } from "@/lib/data/testimonials";
+import { formatPrice } from "@/lib/utils/format";
 import type { ActivePromotion } from "@/lib/data/public";
 import type { Brand } from "@/types/database";
 
@@ -117,7 +118,7 @@ function PromotionCard({ promotion }: { promotion: ActivePromotion }) {
     promotion.discount_type === "percentage"
       ? `${promotion.discount_value ?? 0}% OFF`
       : promotion.discount_type === "fixed_amount"
-        ? `$${Number(promotion.discount_value ?? 0).toFixed(2)} OFF`
+        ? `${formatPrice(Number(promotion.discount_value ?? 0))} OFF`
         : "2x1";
 
   return (
@@ -153,8 +154,8 @@ function PromotionCard({ promotion }: { promotion: ActivePromotion }) {
               </div>
               <p className="mt-2 line-clamp-2 text-sm font-medium text-zinc-100">{target.name}</p>
               <div className="mt-1 flex items-baseline gap-2">
-                <span className="text-xs text-zinc-400 line-through">${target.originalPrice.toFixed(2)}</span>
-                <span className="text-sm font-bold text-brand-tint">${target.discountedPrice.toFixed(2)}</span>
+                <span className="text-xs text-zinc-400 line-through">{formatPrice(target.originalPrice)}</span>
+                <span className="text-sm font-bold text-brand-tint">{formatPrice(target.discountedPrice)}</span>
               </div>
             </Link>
           ))}

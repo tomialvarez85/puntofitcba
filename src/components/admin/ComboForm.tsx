@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useState, type ChangeEvent, type FormEvent } from "react";
 import { useRouter } from "next/navigation";
 import { createCombo, updateCombo } from "@/lib/actions/combos";
+import { formatPrice } from "@/lib/utils/format";
 import type { ComboWithItems, Product } from "@/types/database";
 
 type ComboFormProps = {
@@ -306,7 +307,7 @@ export default function ComboForm({ initialProducts, mode = "create", combo }: C
 
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <p className="text-sm text-zinc-400">
-            Precio del combo: ${priceValue.toFixed(2)} · Productos: {items.length}
+            Precio del combo: {formatPrice(priceValue)} · Productos: {items.length}
           </p>
           <button
             type="submit"
